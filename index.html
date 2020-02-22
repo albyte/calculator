@@ -161,11 +161,13 @@
 
 <div class="container-fluid">
     <div class="col-md-12">
-        <h2>10進数</h2>
-        <label class="input-group mb-3">
-            <input type="text" id="n10" name="n10" class="form-control form-control-lg" placeholder="65,535までの整数を入力">
-        </label>
-        <div class="row justify-content-center mb-2">
+        <div class="input-group mb-3">
+            <span class="input-group-prepend">
+                <label for="n10" class="input-group-text">10進数</label>
+            </span>
+            <input type="text" id="n10" name="n10" class="form-control form-control-lg" placeholder="整数を入力">
+        </div>
+        <div class="row justify-content-center mb-3">
             <div class="btn-group">
                 <button id="btn-to2" class="btn btn-lg btn-primary"><i class="fa fa-arrow-alt-circle-down"></i> 2進数変換
                 </button>
@@ -173,7 +175,6 @@
                 </button>
             </div>
         </div>
-        <h2>2進数</h2>
         <div class="input-group mb-3">
             <table class="table table-responsive ">
                 <tr id="n2-tr">
@@ -182,7 +183,7 @@
         </div>
         <h2>計算手順</h2>
         <div id="log-panel">
-            <table id="log" class="log-table"></table>
+            <table id="log" class="log-table"><tr><td>計算結果までの過程を表示します。</td></tr></table>
         </div>
     </div>
 </div>
