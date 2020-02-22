@@ -81,7 +81,7 @@
                 let code = event.keyCode;
                 if (code === 48 || code === 49) {
                     let nextIndex = $n2s.index(this) + 1;
-                    if (nextIndex < $n2s.length) {
+                    if (nextIndex <= $n2s.length) {
                         $n2s.get(nextIndex).focus();
                     }else{
                         $btn_to10.focus();
