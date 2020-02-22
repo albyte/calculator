@@ -5,4 +5,4 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - ./htdocs:/var/www/html
+      - ./docs:/var/www/html

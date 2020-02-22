@@ -16,6 +16,18 @@
             crossorigin="anonymous"></script>
     <script>
         $(function () {
+            let $n2_tr = $('#n2-tr');
+            for (let i = 15; i >= 0; i--) {
+                $n2_tr.append(
+                    '<td><div class="text-center">2<sup>' + i + '</sup></div>' +
+                    '<label><input type="text" id="n2-' + i + '" name="n2[]" data-power="' + i + '" value="0" class="n2 form-control text-center" maxlength="1"></label>' +
+                    '</td>'
+                );
+                if (i % 4 === 0 && i !== 0) {
+                    $n2_tr.append('<td>　</td>');
+                }
+            }
+
             let $n10 = $('#n10');
             let $n2s = $('.n2:input');
 
@@ -85,6 +97,7 @@
              */
             $btn_to10.on('click', function () {
                 $log.html(''); // ログ初期化
+                $log.append('<tr><td colspan="4">整数部計算</td></tr>');
                 let n10 = 0;
                 $n2s.each(function () {
                     let $self = $(this);
@@ -147,23 +160,7 @@
         <h2>2進数</h2>
         <div class="input-group mb-3">
             <table>
-                <tr>
-                    <?php for ($i = 15; $i >= 0; $i--): ?>
-                        <td style="<?= $i % 4 == 0 ? 'border-right:1px solid #aaa;' : '' ?>">
-                            <div class="text-center">
-                                2<sup><?= $i ?></sup>
-                            </div>
-                            <label>
-                                <input type="text"
-                                       id="n2-<?= $i ?>"
-                                       name="n2-<?= $i ?>"
-                                       data-power="<?= $i ?>"
-                                       value="0"
-                                       class="n2 form-control text-center"
-                                       maxlength="1">
-                            </label>
-                        </td>
-                    <? endfor; ?>
+                <tr id="n2-tr">
                 </tr>
             </table>
         </div>
