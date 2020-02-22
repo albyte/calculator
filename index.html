@@ -65,11 +65,9 @@
                         $add_tr.appendTo($log).fadeIn();
                     }
                 }
-                let index = 0;
-                $log.find('.mod').each(function () {
+                $log.find('.mod').each(function (index) {
                     $(this).after('<td> -> </td><td>2<sup>' + index + '</sup></td>');
                     $('#n2-' + index).val($(this).text());
-                    index++;
                 });
             });
 
@@ -123,18 +121,31 @@
             background: #eee;
         }
 
-        .log-table td {
-            padding: 1px 3px 1px 3px;
-            margin: 1px;
-        }
-
         td.lb-border {
             border-left: 1px solid #888;
             border-bottom: 1px solid #888;
         }
 
+        table.table td {
+            padding: 1px;
+        }
+
+        input.n2 {
+            min-width: 40px;
+        }
+
         #n10 {
             font-size: 3em;
+        }
+
+        @media screen and (max-width: 480px) {
+            input[type="text"] {
+                font-size: 1em;
+            }
+
+            #n10 {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
@@ -151,15 +162,17 @@
         <label class="input-group mb-3">
             <input type="text" id="n10" name="n10" class="form-control form-control-lg" placeholder="65,535までの整数を入力">
         </label>
-        <div class="text-center">
-            <button id="btn-to2" class="btn btn-lg btn-primary"><i class="fa fa-arrow-alt-circle-down"></i> 2進数へ変換
-            </button>
-            <button id="btn-to10" class="btn btn-lg btn-danger"><i class="fa fa-arrow-alt-circle-up"></i> 10進数へ変換
-            </button>
+        <div class="row justify-content-center mb-2">
+            <div class="btn-group">
+                <button id="btn-to2" class="btn btn-lg btn-primary"><i class="fa fa-arrow-alt-circle-down"></i> 2進数変換
+                </button>
+                <button id="btn-to10" class="btn btn-lg btn-danger"><i class="fa fa-arrow-alt-circle-up"></i> 10進数変換
+                </button>
+            </div>
         </div>
         <h2>2進数</h2>
         <div class="input-group mb-3">
-            <table>
+            <table class="table table-responsive ">
                 <tr id="n2-tr">
                 </tr>
             </table>
