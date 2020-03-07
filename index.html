@@ -14,22 +14,26 @@
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"
             integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
             crossorigin="anonymous"></script>
+    <link href="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script>
         $(function () {
             let $n2_tr = $('#n2-tr');
             for (let i = 15; i >= 0; i--) {
                 $n2_tr.append(
                     '<td><div class="text-center">2<sup>' + i + '</sup></div>' +
-                    '<label><input type="text" id="n2-' + i + '" name="n2[]" data-power="' + i + '" value="0" class="n2 form-control text-center" maxlength="1"></label>' +
+                    '<input id="n2-' + i + '" name="n2[]" data-power="' + i + '" type="checkbox" class="n2" data-toggle="toggle" data-on="1" data-off="0" data-onstyle="dark">' +
                     '</td>'
+
                 );
                 if (i % 4 === 0 && i !== 0) {
                     $n2_tr.append('<td>　</td>');
                 }
             }
+            $('input[data-toggle]').bootstrapToggle();
 
             let $n10 = $('#n10');
-            let $n2s = $('.n2:input');
+            let $n2s = $('.n2');
 
             let $log = $('#log');
             let $btn_to2 = $('#btn-to2');
@@ -47,7 +51,9 @@
              */
             $btn_to2.on('click', function () {
                 $log.html(''); // ログ初期化
-                $n2s.val(0); // 2進数入力欄初期化
+                $n2s.each(function () {
+                    $(this).prop('checked',false).change()
+                });
                 if ($n10.val() === '') {
                     $n10.val(0); // 10進数入力欄が空なら0を入力
                 }
@@ -67,32 +73,13 @@
                 }
                 $log.find('.mod').each(function (index) {
                     $(this).after('<td> -> </td><td>2<sup>' + index + '</sup></td>');
-                    $('#n2-' + index).val($(this).text());
+                    console.log($(this).text());
+                    if(parseInt($(this).text(),10) === 1){
+                        $('#n2-' + index).prop('checked', true).change();
+                    }
                 });
             });
 
-            /**
-             * 2進数入力
-             */
-            $n2s.on('focus', function () {
-                this.select();
-            }).on('keyup', function (event) {
-                let $self = $(this);
-                let code = event.keyCode;
-                if (code === 48 || code === 49) {
-                    let nextIndex = $n2s.index(this) + 1;
-                    if (nextIndex < $n2s.length) {
-                        $n2s.get(nextIndex).focus();
-                    }else{
-                        $btn_to10.focus();
-                    }
-                    return true;
-                } else {
-                    $self.val(0);
-                    this.select();
-                    return false;
-                }
-            });
             /**
              * 2進数 -> 10進数計算
              */
@@ -102,7 +89,7 @@
                 let n10 = 0;
                 $n2s.each(function () {
                     let $self = $(this);
-                    if ($self.val() === "1") {
+                    if ($self.is(':checked')) {
                         let power = parseInt($self.attr('data-power'), 10);
                         let add = Math.pow(2, power);
                         n10 += add;
@@ -169,9 +156,11 @@
         </div>
         <div class="row justify-content-center mb-3">
             <div class="btn-group">
-                <button id="btn-to2" class="btn btn-lg btn-primary"><i class="fa fa-arrow-alt-circle-down"></i> 2進数変換
+                <button id="btn-to2" class="btn btn-lg btn-primary">
+                    <i class="fa fa-arrow-alt-circle-down"></i> 2進数変換
                 </button>
-                <button id="btn-to10" class="btn btn-lg btn-danger"><i class="fa fa-arrow-alt-circle-up"></i> 10進数変換
+                <button id="btn-to10" class="btn btn-lg btn-danger">
+                    <i class="fa fa-arrow-alt-circle-up"></i> 10進数変換
                 </button>
             </div>
         </div>
@@ -183,7 +172,11 @@
         </div>
         <h2>計算手順</h2>
         <div id="log-panel">
-            <table id="log" class="log-table"><tr><td>計算結果までの過程を表示します。</td></tr></table>
+            <table id="log" class="log-table">
+                <tr>
+                    <td>計算結果までの過程を表示します。</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
